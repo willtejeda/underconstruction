@@ -22,7 +22,7 @@
             },
             colors: {
               'brand-gold': '#FBBF24', // A vibrant, modern gold
-              'brand-dark': '#111827', // A deep, dark blue-gray
+              'brand-dark': '#000000', // A deep, dark blue-gray
               'brand-light': '#F9FAFB', // A clean, light off-white
               'brand-gray': '#1F2937', // A slightly lighter dark shade for elements
             },
@@ -104,35 +104,37 @@
                     <!-- Subtle background texture -->
                     <div class="absolute top-0 left-0 w-full h-full bg-[url('https://www.transparenttextures.com/patterns/dark-matter.png')] opacity-20"></div>
                     
-                    <main class="z-10 text-center flex flex-col items-center animate-fade-in-down" style="opacity: 0;">
-                        <div class="w-28 h-28 md:w-32 md:h-32 border-2 border-brand-gold rounded-full flex items-center justify-center mb-6 shadow-2xl shadow-brand-gold/10 bg-brand-dark">
-                            <span class="text-4xl md:text-5xl font-black text-brand-gold tracking-tighter">SSS</span>
-                        </div>
-
-                        <h1 class="text-4xl md:text-6xl font-black tracking-tight text-white mb-3">
-                            Sound Shuttle Studios
-                        </h1>
-                        <p class="text-lg md:text-xl text-white/70 font-light mb-12 max-w-2xl">
-                            Your sonic destination. A recording, mixing, and mastering powerhouse. The new website is launching soon.
-                        </p>
-
-                        <!-- Social links are hidden if beta is true -->
-                        ${!beta && html`
-                            <div class="mt-8">
-                                <p class="mb-6 text-sm uppercase tracking-widest text-white/70">Stay Connected</p>
-                                <div class="flex space-x-6 justify-center">
-                                    <a href="#" class="text-white/70 hover:text-brand-gold transition duration-300">
-                                        <!-- Placeholder Icon -->
-                                        <svg class="w-7 h-7" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/></svg>
-                                    </a>
-                                </div>
+                    <div class="flex flex-col items-center justify-center text-center">
+                        <main class="z-10 flex flex-col items-center animate-fade-in-down" style="opacity: 0;">
+                            <div class="w-28 h-28 md:w-32 md:h-32 border-2 border-brand-gold rounded-full flex items-center justify-center mb-6 shadow-2xl shadow-brand-gold/10 bg-brand-dark">
+                                <span class="text-4xl md:text-5xl font-black text-brand-gold tracking-tighter">SSS</span>
                             </div>
-                        `}
-                    </main>
 
-                    <footer class="z-10 mt-auto pt-10 text-center text-white/40 text-sm">
-                        <p>© ${new Date().getFullYear()} Sound Shuttle Studios. All Rights Reserved.</p>
-                    </footer>
+                            <h1 class="text-4xl md:text-6xl font-black tracking-tight text-white mb-3">
+                                Sound Shuttle Studios
+                            </h1>
+                            <p class="text-lg md:text-xl text-white/70 font-light mb-12 max-w-2xl">
+                                Your sonic destination. A recording, mixing, and mastering powerhouse. The new website is launching soon.
+                            </p>
+
+                            <!-- Social links are hidden if beta is true -->
+                            ${!beta && html`
+                                <div class="mt-8">
+                                    <p class="mb-6 text-sm uppercase tracking-widest text-white/70">Stay Connected</p>
+                                    <div class="flex space-x-6 justify-center">
+                                        <a href="#" class="text-white/70 hover:text-brand-gold transition duration-300">
+                                            <!-- Placeholder Icon -->
+                                            <svg class="w-7 h-7" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/></svg>
+                                        </a>
+                                    </div>
+                                </div>
+                            `}
+                        </main>
+
+                        <footer class="z-10 pt-10 text-white/40 text-sm">
+                            <p>© ${new Date().getFullYear()} Sound Shuttle Studios. All Rights Reserved.</p>
+                        </footer>
+                    </div>
                 </div>
             `;
         };
