@@ -1,105 +1,66 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sound Shuttle Studios - Coming Soon</title>
-    
-    <!-- Google Fonts: Inter -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700;900&display=swap" rel="stylesheet">
-    
-    <!-- Tailwind CSS CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-      // Custom Tailwind theme for a professional studio feel
-      tailwind.config = {
-        theme: {
-          extend: {
-            fontFamily: {
-              sans: ['Inter', 'sans-serif'],
-            },
-            colors: {
-              'brand-gold': '#FBBF24', // A vibrant, modern gold
-              'brand-dark': '#000000', // A deep, dark blue-gray
-              'brand-light': '#F9FAFB', // A clean, light off-white
-              'brand-gray': '#1F2937', // A slightly lighter dark shade for elements
-            },
-            animation: {
-              'fade-in-down': 'fade-in-down 0.8s ease-out forwards',
-              'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
-            },
-            keyframes: {
-              'fade-in-down': {
-                '0%': {
-                    opacity: '0',
-                    transform: 'translateY(-20px)'
-                },
-                '100%': {
-                    opacity: '1',
-                    transform: 'translateY(0)'
-                },
-              }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sound Shuttle Studios - Coming Soon</title>
+
+  <!-- Google Fonts: Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700;900&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    // Custom Tailwind theme for a professional studio feel
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+          },
+          colors: {
+            'brand-gold': '#FBBF24', // A vibrant, modern gold
+            'brand-dark': '#000000', // A deep, dark black
+            'brand-light': '#F9FAFB', // A clean, light off-white
+            'brand-gray': '#1F2937', // A slightly lighter dark shade for elements
+          },
+          animation: {
+            'fade-in-down': 'fade-in-down 0.8s ease-out forwards',
+            'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+          },
+          keyframes: {
+            'fade-in-down': {
+              '0%': {
+                opacity: '0',
+                transform: 'translateY(-20px)'
+              },
+              '100%': {
+                opacity: '1',
+                transform: 'translateY(0)'
+              },
             }
           }
         }
       }
-    </script>
+    }
+  </script>
 
-    <!-- Preact and HTM CDN -->
-    <script type="module">
-        import { h, render } from 'https://cdn.skypack.dev/preact';
-        import { useState, useEffect } from 'https://cdn.skypack.dev/preact/hooks';
-        import htm from 'https://cdn.skypack.dev/htm';
+  <!-- Preact and HTM CDN -->
+  <script type="module">
+    import { h, render } from 'https://cdn.skypack.dev/preact';
+    import { useState, useEffect } from 'https://cdn.skypack.dev/preact/hooks';
+    import htm from 'https://cdn.skypack.dev/htm';
 
-        // Initialize htm with Preact
-        const html = htm.bind(h);
+    // Initialize htm with Preact
+    const html = htm.bind(h);
 
-        const App = () => {
-            // --- SETTINGS ---
-            // Set to true to hide social icons
-            const beta = true;
+    const App = () => {
 
-            // --- COUNTDOWN STATE ---
-            const [countdown, setCountdown] = useState({
-                days: '00',
-                hours: '00',
-                minutes: '00',
-                seconds: '00',
-            });
 
-            // useEffect(() => {
-            //     // Set the target date (e.g., October 1, 2025)
-            //     const targetDate = new Date('2025-10-01T00:00:00').getTime();
-
-            //     const interval = setInterval(() => {
-            //         const now = new Date().getTime();
-            //         const distance = targetDate - now;
-
-            //         if (distance < 0) {
-            //             clearInterval(interval);
-            //             setCountdown({ days: '00', hours: '00', minutes: '00', seconds: '00' });
-            //             return;
-            //         }
-
-            //         const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-            //         const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            //         const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-            //         const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-            //         setCountdown({
-            //             days: String(days).padStart(2, '0'),
-            //             hours: String(hours).padStart(2, '0'),
-            //             minutes: String(minutes).padStart(2, '0'),
-            //             seconds: String(seconds).padStart(2, '0'),
-            //         });
-            //     }, 1000);
-
-            //     return () => clearInterval(interval);
-            // }, []);
-
-            return html`
+      return html`
                 <div class="bg-brand-dark text-brand-light min-h-screen flex flex-col font-sans p-6 overflow-hidden">
                     <!-- Subtle background texture -->
                     <div class="absolute top-0 left-0 w-full h-full bg-[url('https://www.transparenttextures.com/patterns/dark-matter.png')] opacity-20"></div>
@@ -109,22 +70,26 @@
                         <h1 class="text-5xl md:text-6xl font-black tracking-tight text-white mb-3">
                             <span class="text-brand-gold">Sound Shuttle</span> Studios
                         </h1>
-                        <p class="text-lg md:text-xl text-white/70 font-light mb-12 max-w-2xl">
+                        <p class="text-lg md:text-xl text-white/70 font-light mb-8 max-w-2xl">
                             Your sonic destination. A recording, mixing, and mastering powerhouse. The new website is launching soon.
                         </p>
 
-                        <!-- Social links are hidden if beta is true -->
-                        ${!beta && html`
-                            <div class="mt-8">
-                                <p class="mb-6 text-sm uppercase tracking-widest text-white/70">Stay Connected</p>
-                                <div class="flex space-x-6 justify-center">
-                                    <a href="#" class="text-white/70 hover:text-brand-gold transition duration-300">
-                                        <!-- Placeholder Icon -->
-                                        <svg class="w-7 h-7" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/></svg>
-                                    </a>
-                                </div>
-                            </div>
-                        `}
+                        <!-- Book Now Button -->
+                        <div class="mb-12">
+                            <a href="https://engineears.com/studio/soundshuttle/366?bookNow=true" 
+                               target="_blank" 
+                               rel="noopener noreferrer"
+                               class="inline-flex items-center px-8 py-4 bg-brand-gold text-brand-dark font-bold text-lg rounded-lg hover:bg-yellow-300 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl animate-pulse-slow">
+                                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                                </svg>
+                                Book Your Session Now
+                            </a>
+                            <p class="text-sm text-white/50 mt-3">
+                                Ready to record? Don't wait for the new site - book your studio time today!
+                            </p>
+                        </div>
+
                     </main>
 
                     <footer class="z-10 text-center text-white/40 text-sm py-4">
@@ -132,13 +97,15 @@
                     </footer>
                 </div>
             `;
-        };
+    };
 
-        render(html`<${App} />`, document.getElementById('app'));
-    </script>
+    render(html`<${App} />`, document.getElementById('app'));
+  </script>
 </head>
+
 <body class="bg-brand-dark">
-    <!-- App container -->
-    <div id="app"></div>
+  <!-- App container -->
+  <div id="app"></div>
 </body>
+
 </html>
