@@ -75,6 +75,7 @@
       }
     }
   </style>
+
   <script>
     // Custom Tailwind theme for a professional studio feel
     tailwind.config = {
@@ -86,6 +87,7 @@
           colors: {
             // Updated colors with better contrast ratios for WCAG 2.1 AA compliance
             'brand-gold': '#FFD54F', // Enhanced gold with better contrast against dark backgrounds
+            'brand-gold-light': '#FFECB3', // Lighter gold for hover effects
             'brand-dark': '#121212', // A deep, dark black
             'brand-light': '#F9FAFB', // A clean, light off-white
             'brand-gray': '#1F2937', // A slightly lighter dark shade for elements
@@ -96,7 +98,10 @@
           },
           animation: {
             'fade-in-down': 'fade-in-down 0.8s ease-out forwards',
+            'fade-in': 'fade-in 1.2s ease-out forwards',
             'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+            'float': 'float 6s ease-in-out infinite',
+            'shimmer': 'shimmer 2.5s infinite',
           },
           keyframes: {
             'fade-in-down': {
@@ -108,7 +113,38 @@
                 opacity: '1',
                 transform: 'translateY(0)'
               },
+            },
+            'fade-in': {
+              '0%': {
+                opacity: '0',
+              },
+              '100%': {
+                opacity: '1',
+              },
+            },
+            'float': {
+              '0%, 100%': {
+                transform: 'translateY(0)',
+              },
+              '50%': {
+                transform: 'translateY(-10px)',
+              },
+            },
+            'shimmer': {
+              '0%': {
+                backgroundPosition: '-200% 0',
+              },
+              '100%': {
+                backgroundPosition: '200% 0',
+              },
             }
+          },
+          backgroundImage: {
+            'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
+          },
+          boxShadow: {
+            'gold': '0 4px 14px 0 rgba(255, 213, 79, 0.25)',
+            'gold-lg': '0 10px 25px -5px rgba(255, 213, 79, 0.3)',
           }
         }
       }
@@ -121,72 +157,211 @@
     import { useState, useEffect } from 'https://cdn.skypack.dev/preact/hooks';
     import htm from 'https://cdn.skypack.dev/htm';
 
-    const beta = true; // Set to true for beta mode
-
     // Initialize htm with Preact
     const html = htm.bind(h);
 
+    // App configuration and state management
+    const config = {
+      beta: false,
+      year: 2025,
+      bookingUrl: "https://engineears.com/studio/soundshuttle/366?bookNow=true",
+      socialLinks: [
+        {
+          name: "Instagram",
+          url: "#",
+          icon: "M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"
+        },
+        {
+          name: "Twitter",
+          url: "#",
+          icon: "M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"
+        },
+        {
+          name: "YouTube",
+          url: "#",
+          icon: "M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"
+        }
+      ],
+      services: [
+        {
+          name: "Recording",
+          description: "Professional recording services with state-of-the-art equipment",
+          icon: "M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z"
+        },
+        {
+          name: "Mixing",
+          description: "Expert mixing to bring balance and clarity to your tracks",
+          icon: "M7 4v16M17 4v16M3 8h4m10 0h4M3 12h18M3 16h4m10 0h4M4 20h16a1 1 0 001-1V5a1 1 0 00-1-1H4a1 1 0 00-1 1v14a1 1 0 001 1z"
+        },
+        {
+          name: "Mastering",
+          description: "Final polish to make your music industry-ready",
+          icon: "M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3"
+        }
+      ]
+    };
+
+    // Reusable components
+    const Logo = () => {
+      return html`
+        <div class="text-brand-gold font-black text-2xl tracking-tight">
+          <span class="sr-only">Sound Shuttle Studios Logo</span>
+          <svg class="h-8 w-auto" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M20 5L25 15L35 17.5L27.5 25L30 35L20 30L10 35L12.5 25L5 17.5L15 15L20 5Z" fill="currentColor" />
+          </svg>
+        </div>
+      `;
+    };
+
+    const SkipLink = () => {
+      return html`
+        <a href="#main-content" 
+           class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 bg-brand-gold text-brand-dark px-4 py-2 rounded focus:outline-none focus:ring-2 focus:ring-focus-ring focus:ring-offset-2 focus:ring-offset-brand-dark"
+           tabindex="0">
+           Skip to main content
+        </a>
+      `;
+    };
+
+    const Header = () => {
+      return html`
+        <header role="banner" class="z-10 mb-8 w-full max-w-7xl mx-auto" aria-label="Site header">
+          <div class="flex justify-between items-center py-4">
+            <nav role="navigation" aria-label="Main navigation">
+              <${SkipLink} />
+            </nav>
+          </div>
+        </header>
+      `;
+    };
+
+    const BackgroundElements = () => {
+      return html`
+        <div class="absolute top-0 left-0 w-full h-full bg-[url('https://www.transparenttextures.com/patterns/dark-matter.png')] opacity-20" aria-hidden="true"></div>
+        <div class="absolute top-1/4 left-10 w-24 h-24 rounded-full bg-gradient-radial from-brand-gold/20 to-transparent blur-xl animate-pulse-slow" aria-hidden="true"></div>
+        <div class="absolute bottom-1/4 right-10 w-32 h-32 rounded-full bg-gradient-radial from-brand-gold/10 to-transparent blur-xl animate-pulse-slow" aria-hidden="true" style="animation-delay: 1s;"></div>
+        <div class="absolute top-1/3 right-1/4 w-16 h-16 rounded-full bg-gradient-radial from-brand-purple/20 to-transparent blur-lg animate-pulse-slow" aria-hidden="true" style="animation-delay: 2s;"></div>
+      `;
+    };
+
+    const HeroSection = ({ beta }) => {
+      return html`
+        <section aria-labelledby="hero-heading" class="mb-12 relative">
+       
+          <h1 id="hero-heading" class="text-5xl md:text-7xl font-black tracking-tight text-white mb-4">
+            <span class="text-brand-gold bg-gradient-to-r from-brand-gold to-brand-gold-light bg-clip-text text-transparent">Sound Shuttle</span> Studios
+            <span class=${beta ? "ml-2 text-sm align-super bg-brand-gold/20 text-brand-gold px-2 py-1 rounded-md font-bold" : "ml-2 text-sm align-super bg-brand-gold/20 text-brand-gold px-2 py-1 rounded-md font-bold hidden"}>BETA</span>
+          </h1>
+          
+          <h2 class="text-lg md:text-xl text-brand-light/90 font-light mb-8 max-w-2xl mx-auto leading-relaxed">
+            Your sonic destination. A recording, mixing, and mastering powerhouse. 
+            <span class="block mt-2 text-brand-gold/80">The new website is launching soon.</span>
+          </h2>
+        </section>
+      `;
+    };
+
+    const ServiceCard = ({ service }) => {
+      return html`
+        <div class="bg-brand-dark/50 backdrop-blur-sm p-6 rounded-xl border border-brand-light/10 hover:border-brand-gold/30 transition-all duration-300 transform hover:-translate-y-1">
+          <div class="text-brand-gold mb-3">
+            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d=${service.icon}></path>
+            </svg>
+          </div>
+          <h3 class="text-xl font-bold mb-2">${service.name}</h3>
+          <p class="text-brand-light/70">${service.description}</p>
+        </div>
+      `;
+    };
+
+    const ServicesSection = ({ services }) => {
+      return html`
+        <section aria-labelledby="features-heading" class="mb-12 grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto">
+          ${services.map(service => html`<${ServiceCard} service=${service} />`)}
+        </section>
+      `;
+    };
+
+    const BookingSection = ({ bookingUrl }) => {
+      return html`
+        <section aria-labelledby="booking-heading" class="mb-16">
+          <h3 id="booking-heading" class="sr-only">Book Your Studio Session</h3>
+          <div class="relative">
+            <!-- Decorative element -->
+            <div class="absolute -top-10 left-1/2 transform -translate-x-1/2 w-40 h-1 bg-gradient-to-r from-transparent via-brand-gold/50 to-transparent"></div>
+            
+            <div class="bg-gradient-to-b from-brand-dark/80 to-brand-navy/80 backdrop-blur-sm p-8 rounded-2xl border border-brand-light/5 shadow-gold max-w-xl mx-auto">
+              <h4 class="text-2xl font-bold mb-4">Ready to create?</h4>
+              <p class="text-brand-light/80 mb-6">Don't wait for the new site - book your studio time today and bring your sonic vision to life!</p>
+              
+              <a href=${bookingUrl}
+                 target="_blank" 
+                 rel="noopener noreferrer"
+                 class="inline-flex items-center px-8 py-4 bg-brand-gold text-brand-dark font-bold text-lg rounded-lg hover:bg-brand-gold-light transition-all duration-300 transform hover:scale-105 shadow-gold hover:shadow-gold-lg focus:outline-none focus:ring-2 focus:ring-focus-ring focus:ring-offset-2 focus:ring-offset-brand-dark"
+                 aria-label="Book your recording session at Sound Shuttle Studios - opens in new window">
+                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img">
+                  <title>Calendar icon</title>
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                </svg>
+                Book Your Session Now
+              </a>
+            </div>
+          </div>
+        </section>
+      `;
+    };
+
+    const SocialLink = ({ link }) => {
+      return html`
+        <a href=${link.url} class="text-brand-light/60 hover:text-brand-gold transition-colors" aria-label=${`Follow us on ${link.name}`}>
+          <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path d=${link.icon}></path>
+          </svg>
+        </a>
+      `;
+    };
+
+    const Footer = ({ year, socialLinks }) => {
+      return html`
+        <footer role="contentinfo" class="z-10 text-center text-brand-light/60 text-sm py-6 border-t border-brand-light/10 mt-auto" aria-label="Site footer">
+          <div class="max-w-7xl mx-auto">
+            <p >© ${year} Sound Shuttle Studios. All Rights Reserved.</p>
+          </div>
+        </footer>
+      `;
+    };
+
+    // Main App component
     const App = () => {
-      // Focus management for keyboard navigation
+      const [isLoaded, setIsLoaded] = useState(false);
+
+      useEffect(() => {
+        // Set loaded state after component mounts for animations
+        setIsLoaded(true);
+      }, []);
 
       return html`
-                <div class="bg-gradient-to-br from-brand-dark via-black to-brand-navy text-brand-light min-h-screen flex flex-col font-sans p-6 overflow-hidden">
-                    <!-- Subtle background texture -->
-                    <div class="absolute top-0 left-0 w-full h-full bg-[url('https://www.transparenttextures.com/patterns/dark-matter.png')] opacity-20" aria-hidden="true"></div>
-                    
-                    <header role="banner" class="z-10 mb-8" aria-label="Site header">
-                        <nav role="navigation" aria-label="Main navigation">
-                            <!-- Skip to content link for keyboard users -->
-                            <a href="#main-content" 
-                               class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 bg-brand-gold text-brand-dark px-4 py-2 rounded focus:outline-none focus:ring-2 focus:ring-focus-ring focus:ring-offset-2 focus:ring-offset-brand-dark"
-                               tabindex="0">
-                               Skip to main content
-                            </a>
-                        </nav>
-                    </header>
-                    
-                    <main id="main-content" role="main" class="z-10 flex-grow flex flex-col items-center justify-center text-center animate-fade-in-down" aria-label="Main content">
+        <div class="bg-gradient-to-br from-brand-dark via-black to-brand-navy text-brand-light min-h-screen flex flex-col font-sans p-6 overflow-hidden relative">
+          <${BackgroundElements} />
+          <${Header} />
+          
+          <main id="main-content" role="main" class="z-10 flex-grow flex flex-col items-center justify-center text-center" aria-label="Main content">
+            <div class=${isLoaded ? "transform transition-all duration-1000 translate-y-0 opacity-100" : "transform transition-all duration-1000 translate-y-10 opacity-0"}>
+              <${HeroSection} beta=${config.beta} />
+              <${BookingSection} bookingUrl=${config.bookingUrl} />
+            </div>
+          </main>
 
-                        <section aria-labelledby="hero-heading" class="mb-8">
-                            <h1 id="hero-heading" class="text-5xl md:text-6xl font-black tracking-tight text-white mb-3">
-                                <span class="text-brand-gold">Sound Shuttle</span> Studios ${beta ? "Beta" : ""}
-                            </h1>
-                            <h2 class="text-lg md:text-xl text-brand-light font-light mb-8 max-w-2xl">
-                                Your sonic destination. A recording, mixing, and mastering powerhouse. The new website is launching soon.
-                            </h2>
-                        </section>
-
-                        <section aria-labelledby="booking-heading" class="mb-12">
-                            <h3 id="booking-heading" class="sr-only">Book Your Studio Session</h3>
-                            <div>
-                                <a href="https://engineears.com/studio/soundshuttle/366?bookNow=true" 
-                                   target="_blank" 
-                                   rel="noopener noreferrer"
-                                   class="inline-flex items-center px-8 py-4 bg-brand-gold text-brand-dark font-bold text-lg rounded-lg hover:bg-yellow-300 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-focus-ring focus:ring-offset-2 focus:ring-offset-brand-dark"
-                                   aria-label="Book your recording session at Sound Shuttle Studios - opens in new window">
-                                    <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img">
-                                        <title>Calendar icon</title>
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
-                                    </svg>
-                                    Book Your Session Now
-                                </a>
-                                <p class="text-sm text-brand-light/70 mt-3" aria-live="polite">
-                                    Ready to record? Don't wait for the new site - book your studio time today!
-                                </p>
-                            </div>
-                        </section>
-
-                    </main>
-
-                    <footer role="contentinfo" class="z-10 text-center text-brand-light/60 text-sm py-4" aria-label="Site footer">
-                        <p>© ${new Date().getFullYear()} Sound Shuttle Studios. All Rights Reserved.</p>
-                    </footer>
-                </div>
-            `;
+          <${Footer} year=${config.year} socialLinks=${config.socialLinks} />
+        </div>
+      `;
     };
 
     render(html`<${App} />`, document.getElementById('app'));
   </script>
+
+
 </head>
 
 <body class="bg-brand-dark" role="document">
