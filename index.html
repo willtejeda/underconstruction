@@ -121,6 +121,8 @@
     import { useState, useEffect } from 'https://cdn.skypack.dev/preact/hooks';
     import htm from 'https://cdn.skypack.dev/htm';
 
+    const beta = true
+
     // Initialize htm with Preact
     const html = htm.bind(h);
 
@@ -147,7 +149,7 @@
 
                         <section aria-labelledby="hero-heading" class="mb-8">
                             <h1 id="hero-heading" class="text-5xl md:text-6xl font-black tracking-tight text-white mb-3">
-                                <span class="text-brand-gold">Sound Shuttle</span> Studios
+                                <span class="text-brand-gold">Sound Shuttle</span> Studios ${beta ? "Beta" : ""}
                             </h1>
                             <h2 class="text-lg md:text-xl text-brand-light font-light mb-8 max-w-2xl">
                                 Your sonic destination. A recording, mixing, and mastering powerhouse. The new website is launching soon.
