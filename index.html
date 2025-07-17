@@ -4,7 +4,44 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Sound Shuttle Studios - Coming Soon</title>
+
+  <!-- Primary Meta Tags -->
+  <title>Sound Shuttle Studios - Professional Recording Studio | Mixing & Mastering</title>
+  <meta name="title" content="Sound Shuttle Studios - Professional Recording Studio | Mixing & Mastering">
+  <meta name="description"
+    content="Professional recording studio offering mixing, mastering, and production services. Book your session at Sound Shuttle Studios - your sonic destination for high-quality audio production.">
+  <meta name="keywords"
+    content="recording studio, mixing, mastering, music production, audio engineering, sound recording, music studio, professional recording, audio production, studio booking">
+  <meta name="robots" content="index, follow">
+  <meta name="language" content="English">
+  <meta name="author" content="Sound Shuttle Studios">
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://soundshuttlestudios.com/">
+  <meta property="og:title" content="Sound Shuttle Studios - Professional Recording Studio">
+  <meta property="og:description"
+    content="Professional recording studio offering mixing, mastering, and production services. Book your session at Sound Shuttle Studios - your sonic destination.">
+  <meta property="og:image" content="https://soundshuttlestudios.com/images/studio-og-image.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Sound Shuttle Studios - Professional Recording Studio Interior">
+  <meta property="og:site_name" content="Sound Shuttle Studios">
+  <meta property="og:locale" content="en_US">
+
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image">
+  <meta property="twitter:url" content="https://soundshuttlestudios.com/">
+  <meta property="twitter:title" content="Sound Shuttle Studios - Professional Recording Studio">
+  <meta property="twitter:description"
+    content="Professional recording studio offering mixing, mastering, and production services. Book your session today!">
+  <meta property="twitter:image" content="https://soundshuttlestudios.com/images/studio-twitter-image.jpg">
+  <meta property="twitter:image:alt" content="Sound Shuttle Studios - Professional Recording Studio">
+
+  <!-- Additional SEO Meta Tags -->
+  <meta name="theme-color" content="#FFD54F">
+  <meta name="msapplication-TileColor" content="#FFD54F">
+  <link rel="canonical" href="https://soundshuttlestudios.com/">
 
   <!-- Google Fonts: Inter -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -13,6 +50,31 @@
 
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Accessibility styles for focus and keyboard navigation -->
+  <style>
+    /* Enhanced focus styles for keyboard navigation */
+    .keyboard-navigation *:focus {
+      outline: 2px solid #4C9AFF !important;
+      outline-offset: 3px !important;
+    }
+
+    /* Ensure sufficient color contrast for text */
+    .text-contrast-improved {
+      color: rgba(249, 250, 251, 0.9) !important;
+      /* Improved contrast for text */
+    }
+
+    /* Reduce motion for users who prefer reduced motion */
+    @media (prefers-reduced-motion: reduce) {
+      * {
+        animation-duration: 0.001ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.001ms !important;
+        scroll-behavior: auto !important;
+      }
+    }
+  </style>
   <script>
     // Custom Tailwind theme for a professional studio feel
     tailwind.config = {
@@ -22,10 +84,15 @@
             sans: ['Inter', 'sans-serif'],
           },
           colors: {
-            'brand-gold': '#FBBF24', // A vibrant, modern gold
-            'brand-dark': '#000000', // A deep, dark black
+            // Updated colors with better contrast ratios for WCAG 2.1 AA compliance
+            'brand-gold': '#FFD54F', // Enhanced gold with better contrast against dark backgrounds
+            'brand-dark': '#121212', // A deep, dark black
             'brand-light': '#F9FAFB', // A clean, light off-white
             'brand-gray': '#1F2937', // A slightly lighter dark shade for elements
+            'focus-ring': '#4C9AFF', // High visibility focus indicator color
+            'brand-blue': '#1a1a2e', // Deep blue-black for gradient
+            'brand-navy': '#16213e', // Rich navy blue for gradient
+            'brand-purple': '#2a2a4a', // Deep purple for gradient variation
           },
           animation: {
             'fade-in-down': 'fade-in-down 0.8s ease-out forwards',
@@ -58,41 +125,58 @@
     const html = htm.bind(h);
 
     const App = () => {
-
+      // Focus management for keyboard navigation
 
       return html`
-                <div class="bg-brand-dark text-brand-light min-h-screen flex flex-col font-sans p-6 overflow-hidden">
+                <div class="bg-gradient-to-br from-brand-dark via-black to-brand-navy text-brand-light min-h-screen flex flex-col font-sans p-6 overflow-hidden">
                     <!-- Subtle background texture -->
-                    <div class="absolute top-0 left-0 w-full h-full bg-[url('https://www.transparenttextures.com/patterns/dark-matter.png')] opacity-20"></div>
+                    <div class="absolute top-0 left-0 w-full h-full bg-[url('https://www.transparenttextures.com/patterns/dark-matter.png')] opacity-20" aria-hidden="true"></div>
                     
-                    <main class="z-10 flex-grow flex flex-col items-center justify-center text-center animate-fade-in-down" style="opacity: 0;">
-
-                        <h1 class="text-5xl md:text-6xl font-black tracking-tight text-white mb-3">
-                            <span class="text-brand-gold">Sound Shuttle</span> Studios
-                        </h1>
-                        <p class="text-lg md:text-xl text-white/70 font-light mb-8 max-w-2xl">
-                            Your sonic destination. A recording, mixing, and mastering powerhouse. The new website is launching soon.
-                        </p>
-
-                        <!-- Book Now Button -->
-                        <div class="mb-12">
-                            <a href="https://engineears.com/studio/soundshuttle/366?bookNow=true" 
-                               target="_blank" 
-                               rel="noopener noreferrer"
-                               class="inline-flex items-center px-8 py-4 bg-brand-gold text-brand-dark font-bold text-lg rounded-lg hover:bg-yellow-300 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl animate-pulse-slow">
-                                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
-                                </svg>
-                                Book Your Session Now
+                    <header role="banner" class="z-10 mb-8" aria-label="Site header">
+                        <nav role="navigation" aria-label="Main navigation">
+                            <!-- Skip to content link for keyboard users -->
+                            <a href="#main-content" 
+                               class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 bg-brand-gold text-brand-dark px-4 py-2 rounded focus:outline-none focus:ring-2 focus:ring-focus-ring focus:ring-offset-2 focus:ring-offset-brand-dark"
+                               tabindex="0">
+                               Skip to main content
                             </a>
-                            <p class="text-sm text-white/50 mt-3">
-                                Ready to record? Don't wait for the new site - book your studio time today!
-                            </p>
-                        </div>
+                        </nav>
+                    </header>
+                    
+                    <main id="main-content" role="main" class="z-10 flex-grow flex flex-col items-center justify-center text-center animate-fade-in-down" aria-label="Main content">
+
+                        <section aria-labelledby="hero-heading" class="mb-8">
+                            <h1 id="hero-heading" class="text-5xl md:text-6xl font-black tracking-tight text-white mb-3">
+                                <span class="text-brand-gold">Sound Shuttle</span> Studios
+                            </h1>
+                            <h2 class="text-lg md:text-xl text-brand-light font-light mb-8 max-w-2xl">
+                                Your sonic destination. A recording, mixing, and mastering powerhouse. The new website is launching soon.
+                            </h2>
+                        </section>
+
+                        <section aria-labelledby="booking-heading" class="mb-12">
+                            <h3 id="booking-heading" class="sr-only">Book Your Studio Session</h3>
+                            <div>
+                                <a href="https://engineears.com/studio/soundshuttle/366?bookNow=true" 
+                                   target="_blank" 
+                                   rel="noopener noreferrer"
+                                   class="inline-flex items-center px-8 py-4 bg-brand-gold text-brand-dark font-bold text-lg rounded-lg hover:bg-yellow-300 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-focus-ring focus:ring-offset-2 focus:ring-offset-brand-dark"
+                                   aria-label="Book your recording session at Sound Shuttle Studios - opens in new window">
+                                    <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img">
+                                        <title>Calendar icon</title>
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                                    </svg>
+                                    Book Your Session Now
+                                </a>
+                                <p class="text-sm text-brand-light/70 mt-3" aria-live="polite">
+                                    Ready to record? Don't wait for the new site - book your studio time today!
+                                </p>
+                            </div>
+                        </section>
 
                     </main>
 
-                    <footer class="z-10 text-center text-white/40 text-sm py-4">
+                    <footer role="contentinfo" class="z-10 text-center text-brand-light/60 text-sm py-4" aria-label="Site footer">
                         <p>© ${new Date().getFullYear()} Sound Shuttle Studios. All Rights Reserved.</p>
                     </footer>
                 </div>
@@ -103,9 +187,16 @@
   </script>
 </head>
 
-<body class="bg-brand-dark">
-  <!-- App container -->
-  <div id="app"></div>
+<body class="bg-brand-dark" role="document">
+  <!-- App container with ARIA live region for dynamic content -->
+  <div id="app" aria-live="polite"></div>
+
+  <!-- Accessibility features -->
+  <div class="sr-only">
+    <h2>Accessibility Information</h2>
+    <p>This website is optimized for screen readers and keyboard navigation. Press Tab to navigate through interactive
+      elements.</p>
+  </div>
 </body>
 
 </html>
